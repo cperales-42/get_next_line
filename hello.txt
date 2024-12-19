@@ -1,0 +1,8 @@
+holaaa esto es una prueba de get_next_line
+para comprobar si es capaz de leer
+linea 
+por
+linea
+e interpretarlo bien
+por ahora no m va tan mal pero a ver 
+como lo termino d resulver :ppp
