@@ -6,80 +6,79 @@
 /*   By: cperales <cperales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 02:27:28 by cperales          #+#    #+#             */
-/*   Updated: 2024/12/30 10:49:03 by cperales         ###   ########.fr       */
+/*   Updated: 2025/01/08 23:58:01 by cperales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *s)
-{
-	size_t	i;
+#include "get_next_line.h"
 
-	i = 0;
-	if (!s)
-		return (0);
-	while (*s++)
-		i++;
-	return (i);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	int		i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == (char)c)
-			return ((char *)s + i);
-		i++;
-	}
-	if (s[i] == (char)c)
-		return ((char *)s + i);
-	return (0);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*str;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	if (!s1)
-	{
-		s1 = malloc(sizeof(char) * 1);
-		s1[0] = '\0';
-	}
-	str = malloc ((ft_strlen(s1) + ft_strlen(s2)) + 1);
-	if (!str)
-		return (0);
-	while (s1[i] != '\0')
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2[j] != '\0')
-		str[i++] = s2[j++];
-	str[i] = '\0';
-	free(s1);
-	return (str);
-}
-
-char	*ft_strcpy(char *dst, const char *src)
+int	ft_strlen(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (src[i] && src[i] != '\n')
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strchr(const char *str, int c)
+{
+	if (!str || !str[0])
+		return (NULL);
+	while (*str != '\0')
 	{
-		dst[i] = src[i];
+		if (*str == (char)c)
+			return ((char *)str);
+		str++;
+	}
+	if ((char)c == '\0')
+		return ((char *)str);
+	return (NULL);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	char	*str;
+	size_t	i;
+
+	str = malloc(count * size);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < count * size)
+	{
+		str[i] = 0;
 		i++;
 	}
-	if (src[i] == '\n')
-		dst[i++] = '\n';
-	dst[i] = '\0';
-	return (dst);
+	return ((void *)str);
+}
+
+char	*ft_str_join_and_free(char *s1, char *s2)
+{
+	char	*s3;
+	int		i;
+	int		j;
+	int		g;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (s2);
+	s3 = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!s3)
+		return (NULL);
+	i = 0;
+	j = 0;
+	g = 0;
+	while (s1[i])
+		s3[g++] = s1[i++];
+	while (s2[j])
+		s3[g++] = s2[j++];
+	s3[g] = '\0';
+	free(s1);
+	free(s2);
+	return (s3);
 }
